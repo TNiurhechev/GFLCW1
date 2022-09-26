@@ -33,16 +33,16 @@ public class DataOperator {
             System.out.println("Select an option:\n" +
                     "\"add\"(\"a\") to add an item\n" +//done
                     "\"delete\"(\"d\") to delete a manufacturer and its production\n" +//done
-                    "\"edit\"(\"e\") to edit an item\n" +
+                    "\"edit\"(\"e\") to edit an item\n" +//done
                     "\"exit\"(\"x\") to exit\n" +//done
                     "\"save\"(\"s\") to save results\n" +//done
                     "\"update\"(\"u\") to update lists\n" +//done
-                    "\"view\"(\"v\") to view an item\n" +
-                    "\"view all\"(\"va\") to view all manufacturers and their items\n" +
-                    "\"view by country\"(\"vc\") to view souvenirs from a specific country\n" +
-                    "\"view by manufacturer\"(\"vm\") to view souvenirs from a specific manufacturer" +
-                    "\"view by price\"(\"vp\") to view manufacturers whose prices are lower than value\n" +
-                    "\"view by year\"(\"vy\") to view all souvenirs produced in a specific year\n" +
+                    "\"view\"(\"v\") to view an item\n" +//done
+                    "\"view all\"(\"va\") to view all manufacturers and their items\n" +//done
+                    "\"view by country\"(\"vc\") to view souvenirs from a specific country\n" +//done
+                    "\"view by manufacturer\"(\"vm\") to view souvenirs from a specific manufacturer" +//done
+                    "\"view by price\"(\"vp\") to view manufacturers whose prices are lower than value\n" +//done
+                    "\"view by year\"(\"vy\") to view all souvenirs produced in a specific year\n" +//done
                     "\"view by years\"(\"vys\") to view souvenirs by years:");
             choice = scanner.next();
             switch(choice){
@@ -192,6 +192,11 @@ public class DataOperator {
                     souvenirs = ss.read("souvenirs.txt");
                     break;
                 case "view by year": case "vy":
+                    System.out.print("Enter year:");
+                    int selectedYear = scanner.nextInt();
+                    System.out.println("Souvenirs made in " + selectedYear);
+                    souvenirs.stream().filter(s -> s.getProductionDate().getYear()==selectedYear)
+                            .forEach(System.out::println);
                     break;
                 case "view by years": case "vys":
                     break;
