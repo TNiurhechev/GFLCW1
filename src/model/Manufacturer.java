@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Manufacturer {
+public class Manufacturer implements Serializable {
     private String name;
     private String country;
 

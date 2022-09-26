@@ -5,23 +5,25 @@ import serialization.SouvenirSerializer;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class DataOperator {
     private Scanner scanner;
     private ManufacturerSerializer ms;
     private SouvenirSerializer ss;
-    private List<Manufacturer> manufacturers;
-    private List<Souvenir> souvenirs;
+    private List<Manufacturer> manufacturers = new ArrayList<>();
+    private List<Souvenir> souvenirs = new ArrayList<>();
     {
         scanner = new Scanner(System.in);
         ms = new ManufacturerSerializer();
         ss = new SouvenirSerializer();
         try {
-            manufacturers = ms.read("manufacturers.txt");
-            souvenirs = ss.read("souvenirs.txt");
+            manufacturers = ms.read("D:/ОП/out/manufacturers.txt");
+            souvenirs = ss.read("D:/ОП/out/souvenirs.txt");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -44,32 +46,33 @@ public class DataOperator {
                     "\"view by price\"(\"vp\") to view manufacturers whose prices are lower than value\n" +//done
                     "\"view by year\"(\"vy\") to view all souvenirs produced in a specific year\n" +//done
                     "\"view by years\"(\"vys\") to view souvenirs by years:");
-            choice = scanner.next();
+            choice = scanner.nextLine();
             switch(choice){
                 case "add": case "a":
-                    System.out.print("Enter \"m\" for manufacturer or \"s\" for souvenir:");
-                    switch (scanner.nextLine()) {
+                    System.out.println("Enter \"m\" for manufacturer or \"s\" for souvenir:");
+                    String addChoice = scanner.nextLine();
+                    switch (addChoice) {
                         case "m" -> {
-                            System.out.print("Enter company's name:");
+                            System.out.println("Enter company's name:");
                             String mName = scanner.nextLine();
-                            System.out.print("Enter company's country of origin:");
+                            System.out.println("Enter company's country of origin:");
                             String mCountry = scanner.nextLine();
                             manufacturers.add(new Manufacturer(mName, mCountry));
                         }
                         case "s" -> {
-                            System.out.print("Enter souvenir's name:");
+                            System.out.println("Enter souvenir's name:");
                             String sName = scanner.nextLine();
-                            System.out.print("Enter manufacturer's name:");
+                            System.out.println("Enter manufacturer's name:");
                             String sMName = scanner.nextLine();
-                            System.out.print("Enter manufacturer's country of origin:");
+                            System.out.println("Enter manufacturer's country of origin:");
                             String sCountry = scanner.nextLine();
-                            System.out.print("Enter production year:");
+                            System.out.println("Enter production year:");
                             int year = scanner.nextInt();
-                            System.out.print("Enter production month:");
+                            System.out.println("Enter production month:");
                             int month = scanner.nextInt();
-                            System.out.print("Enter production day:");
+                            System.out.println("Enter production day:");
                             int day = scanner.nextInt();
-                            System.out.print("Enter price:");
+                            System.out.println("Enter price:");
                             int price = scanner.nextInt();
                             souvenirs.add(new Souvenir(sName, new Manufacturer(sMName, sCountry),
                                     LocalDate.of(year, month, day), price));
@@ -78,7 +81,7 @@ public class DataOperator {
                     }
                     break;
                 case "delete": case "d":
-                    System.out.print("Enter company's name:");
+                    System.out.println("Enter company's name:");
                     String delName = scanner.nextLine();
                     manufacturers = (List<Manufacturer>) manufacturers.stream()
                             .filter(m -> !m.getName().equals(delName));
@@ -89,11 +92,11 @@ public class DataOperator {
                     System.out.print("Enter \"m\" for manufacturer or \"s\" for souvenir:");
                     switch (scanner.nextLine()) {
                         case "m" -> {
-                            System.out.print("Enter old company's name:");
+                            System.out.println("Enter old company's name:");
                             String oldName = scanner.nextLine();
-                            System.out.print("Enter new company's name:");
+                            System.out.println("Enter new company's name:");
                             String eName = scanner.nextLine();
-                            System.out.print("Enter company's new country of origin:");
+                            System.out.println("Enter company's new country of origin:");
                             String eCountry = scanner.nextLine();
                             ListIterator<Manufacturer> iterator = manufacturers.listIterator();
                             while(iterator.hasNext()){
@@ -103,23 +106,23 @@ public class DataOperator {
                             }
                         }
                         case "s" -> {
-                            System.out.print("Enter souvenir's old name:");
+                            System.out.println("Enter souvenir's old name:");
                             String oSName = scanner.nextLine();
-                            System.out.print("Enter manufacturer's old name:");
+                            System.out.println("Enter manufacturer's old name:");
                             String oMName = scanner.nextLine();
-                            System.out.print("Enter souvenir's new name:");
+                            System.out.println("Enter souvenir's new name:");
                             String eSName = scanner.nextLine();
-                            System.out.print("Enter manufacturer's new name:");
+                            System.out.println("Enter manufacturer's new name:");
                             String eMName = scanner.nextLine();
-                            System.out.print("Enter manufacturer's new country of origin:");
+                            System.out.println("Enter manufacturer's new country of origin:");
                             String eMCountry = scanner.nextLine();
-                            System.out.print("Enter new production year:");
+                            System.out.println("Enter new production year:");
                             int eYear = scanner.nextInt();
-                            System.out.print("Enter new production month:");
+                            System.out.println("Enter new production month:");
                             int eMonth = scanner.nextInt();
-                            System.out.print("Enter new production day:");
+                            System.out.println("Enter new production day:");
                             int eDay = scanner.nextInt();
-                            System.out.print("Enter new price:");
+                            System.out.println("Enter new price:");
                             int ePrice = scanner.nextInt();
                             ListIterator<Souvenir> iterator = souvenirs.listIterator();
                             while(iterator.hasNext()){
@@ -137,15 +140,15 @@ public class DataOperator {
                 case "view": case "v":
                     System.out.print("Enter \"m\" for manufacturer or \"s\" for souvenir:");
                     switch (scanner.nextLine()){
-                        case "m" ->{
-                            System.out.print("Enter souvenir's name:");
+                        case "s" ->{
+                            System.out.println("Enter souvenir's name:");
                             String vSName = scanner.nextLine();
                             System.out.println("All souvenirs with this name:");
                             souvenirs.stream().filter(s -> s.getManufacturer().getName().equals(vSName))
                                     .forEach(System.out::println);
                         }
-                        case "s" ->{
-                            System.out.print("Enter company's name:");
+                        case "m" ->{
+                            System.out.println("Enter company's name:");
                             String vMName = scanner.nextLine();
                             System.out.println("All companies with this name:");
                             manufacturers.stream().filter(s -> s.getName().equals(vMName))
@@ -163,21 +166,21 @@ public class DataOperator {
                     souvenirs.forEach(System.out::println);
                     break;
                 case "view by country": case "vc":
-                    System.out.print("Enter country's name:");
+                    System.out.println("Enter country's name:");
                     String selectedCountry = scanner.nextLine();
                     System.out.println("Souvenirs made in " + selectedCountry);
                     souvenirs.stream().filter(s -> s.getManufacturer().getCountry().equals(selectedCountry))
                             .forEach(System.out::println);
                     break;
                 case "view by manufacturer": case "vm":
-                    System.out.print("Enter manufacturer's name:");
+                    System.out.println("Enter manufacturer's name:");
                     String selectedManufacturer = scanner.nextLine();
                     System.out.println("Souvenirs from " + selectedManufacturer);
                     souvenirs.stream().filter(s -> s.getManufacturer().getName().equals(selectedManufacturer))
                             .forEach(System.out::println);
                     break;
                 case "View by price": case "vp":
-                    System.out.print("Enter price:");
+                    System.out.println("Enter price:");
                     int selectedPrice = scanner.nextInt();
                     System.out.println("Souvenirs below the price of " + selectedPrice);
                     souvenirs.stream().filter(s -> s.getPrice()<selectedPrice)
@@ -192,13 +195,17 @@ public class DataOperator {
                     souvenirs = ss.read("souvenirs.txt");
                     break;
                 case "view by year": case "vy":
-                    System.out.print("Enter year:");
+                    System.out.println("Enter year:");
                     int selectedYear = scanner.nextInt();
                     System.out.println("Souvenirs made in " + selectedYear);
                     souvenirs.stream().filter(s -> s.getProductionDate().getYear()==selectedYear)
                             .forEach(System.out::println);
                     break;
                 case "view by years": case "vys":
+                    System.out.println("Souvenirs by years");
+                    souvenirs.stream()
+                            .collect(Collectors.groupingBy(s -> s.getProductionDate().getYear()))
+                            .forEach((s,y) -> System.out.println(s + ":" + y));
                     break;
                 default:
                     System.out.println("No such option exists!");
