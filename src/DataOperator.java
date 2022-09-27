@@ -187,12 +187,12 @@ public class DataOperator {
                             .forEach(System.out::println);
                     break;
                 case "save": case "s":
-                    ms.write("manufacturers.txt", manufacturers);
-                    ss.write("souvenirs.txt", souvenirs);
+                    ms.write("D:/ОП/out/manufacturers.txt", manufacturers);
+                    ss.write("D:/ОП/out/souvenirs.txt", souvenirs);
                     break;
                 case "update": case "u":
-                    manufacturers = ms.read("manufacturers.txt");
-                    souvenirs = ss.read("souvenirs.txt");
+                    manufacturers = ms.read("D:/ОП/out/manufacturers.txt");
+                    souvenirs = ss.read("D:/ОП/out/souvenirs.txt");
                     break;
                 case "view by year": case "vy":
                     System.out.println("Enter year:");
